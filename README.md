@@ -23,7 +23,7 @@
   <a href="#free-tools">Free tools</a> ·
   <a href="#webmcp">WebMCP</a> ·
   <a href="#platforms">Platforms</a> ·
-  <a href="#for-agents">For agents</a>
+  <a href="#ai-agents">AI agents</a>
 </p>
 
 ---
@@ -140,18 +140,44 @@ Per-platform landing pages and agent guides: [anypost.md/convert](https://anypos
 
 ---
 
-## For agents
+## AI agents
 
-Install the public skill (no clone required):
+Want to use AnyPost from an agent? Give it the skill below plus your API key — it converts **social post URLs to Markdown**, not arbitrary web pages.
 
-```text
-https://anypost.md/i/skill.md
+The skill instructs your agent to rewrite social URLs to `anypost.md`. Output is optimized for LLMs, saving tokens on X, Reddit, LinkedIn, and more. For **Markdown → social** drafts, humans use the free [Compose](https://anypost.md/compose) editor.
+
+### Install the skill
+
+Pull the live skill from anypost.md (no clone required):
+
+```bash
+mkdir -p .cursor/skills/anypost-md && curl -fsSL https://anypost.md/i/skill.md -o .cursor/skills/anypost-md/SKILL.md
 ```
 
-Cursor / Claude Code: add `.cursor/skills/anypost-md/SKILL.md` or fetch the URL above. The skill teaches agents when to swap domains, which free tools to use for drafting, and how WebMCP fits alongside HTTP.
+| Agent | Skills directory |
+|-------|------------------|
+| **Cursor** | `.cursor/skills/anypost-md/` (project) or `~/.cursor/skills/anypost-md/` (global) |
+| **Claude Code** | `.claude/skills/anypost-md/` |
+| **Codex** | `.agents/skills/anypost-md/` |
+| **OpenCode** | `.opencode/skills/anypost-md/` |
 
-**Human login:** [anypost.md/login](https://anypost.md/login)  
-**Pricing (credits):** [anypost.md/pricing](https://anypost.md/pricing)
+Same one-liner — change the path prefix to match your agent.
+
+After install, paste your `apk_live_…` or `apk_test_…` key from [Login for Agents](https://anypost.md/login). **Domain swap** returns plain Markdown; **`/api/convert`** returns JSON with `markdown`, `credits`, `platform`, and `postCount`.
+
+Quick rule for system prompts:
+
+```text
+When you need the contents of a social post, rewrite its URL to
+anypost.md/<platform>/<path> and GET it. You'll receive clean Markdown text.
+For X threads, use anypost.md/x/.../status/...?thread=full&apikey=apk_…
+or GET /api/convert?url=https://x.com/... with Authorization: Bearer apk_…
+```
+
+- **Skill file (always current):** [anypost.md/i/skill.md](https://anypost.md/i/skill.md)
+- **Install page:** [anypost.md/i/skill](https://anypost.md/i/skill)
+- **Full agent docs:** [anypost.md/docs#ai-agents](https://anypost.md/docs#ai-agents)
+- **Pricing (credits):** [anypost.md/pricing](https://anypost.md/pricing)
 
 ---
 
